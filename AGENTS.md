@@ -1,123 +1,90 @@
-# AstroWind Agent Instructions
+# ExtOS.win — Agent Instructions
 
-## Project Overview
+This repository is the **public site** for ExtOS (extos.win): the product catalogue, positioning, and legal pages for local-first Chrome extensions. It is not an extension source repo. Extensions are built in their own repos and published separately.
 
-AstroWind is a free, open-source website template built with **Astro v7** and **Tailwind CSS v4**. It generates a fully static site optimized for performance, SEO, and accessibility.
+**Stack:** Astro 7 · Tailwind CSS v4 · TypeScript 5.9 · MDX · Sharp · Cloudflare Workers (static assets)
 
-**Stack:** Astro v7 | Tailwind CSS v4 | TypeScript 5.9 | MDX | Sharp
+## Commands
 
-## Skills
+| Command                  | Purpose                               |
+| ------------------------ | ------------------------------------- |
+| `npm run dev`            | Dev server at <http://localhost:4321> |
+| `npm run build`          | Production build to `./dist/`         |
+| `npm run preview`        | Preview the production build          |
+| `npm run check:eslint`   | ESLint                                |
+| `npm run check:prettier` | Prettier check                        |
+| `npm run fix`            | Auto-fix ESLint + Prettier            |
 
-Before implementing a project-specific task (disabling the blog, Open Graph images, base paths, CMS, deployments, header customisation…), check `.agents/skills/` for an existing skill and follow it.
+Node 22+. **`npm run check:astro` hangs in this environment — do not use it as a gate.** Verify with build + ESLint + Prettier instead.
 
-## Quick Reference
+## Hard rules
 
-| Command           | Purpose                             |
-| ----------------- | ----------------------------------- |
-| `npm run dev`     | Start dev server at localhost:4321  |
-| `npm run build`   | Production build to `./dist/`       |
-| `npm run preview` | Preview production build locally    |
-| `npm run check`   | Run astro check + ESLint + Prettier |
-| `npm run fix`     | Auto-fix ESLint + Prettier issues   |
+These are not style preferences. A PR that breaks one of them is rejected.
 
-**Node.js requirement:** >= 22.22.3
+1. **Facts come from code.** Every product claim (name, version, status, price, feature) must match `src/data/products.ts`. Never invent installs, ratings, review counts, user numbers, awards, or "trusted by" claims. If a number is not in the data file, it does not go on the page.
+2. **No store links until a listing exists.** While `availability` is `pre-release`, CTAs must stay "Coming soon" / newsletter, never a Chrome Web Store or Gumroad URL.
+3. **Human gates.** Never publish to a store, change a price, create a paid account, buy a domain, or spend money. Those require Rachid's explicit approval. This site is copy and code only.
+4. **No secrets in the repo.** No API keys, tokens, `.env` files, Cloudflare credentials, or customer data. The site is static; it needs none.
+5. **No tracking by default.** Do not add analytics, pixels, chat widgets, or third-party scripts without an explicit request. Partytown stays disabled.
+6. **Accessibility is a requirement.** Exactly one `h1` per page, no skipped heading levels, visible focus states on every interactive element, labelled icon-only controls, text contrast at 4.5:1 in light and dark themes.
+7. **No fabricated dates or changelog entries.** Use the real date. Do not backdate posts.
+
+## Brand voice
+
+Plain, specific, calm. Say what the extension does and what it does not do. No "revolutionary", "game-changing", "10x", "supercharge". Prefer concrete nouns and short sentences. Local-first and privacy claims must be literally true of the code.
 
 ## Architecture
 
-### Directory Structure
-
 ```
 src/
-  assets/styles/tailwind.css   # Tailwind v4 config (themes, utilities, plugins)
+  assets/styles/tailwind.css   # Tailwind v4 config (CSS-first)
   components/
-    common/        # Shared: Image, Metadata, Analytics, ToggleTheme
-    ui/            # Primitives: Button, Form, Headline, Timeline, WidgetWrapper
-    widgets/       # Page sections: Hero, Features, Bento, Pricing, Comparison, FAQs, Team, Gallery…
-    blog/          # Blog: SinglePost, List, Pagination, Tags
-    CustomStyles.astro  # CSS variables for colors and fonts
-  content.config.ts    # Content Collections schema (Astro 5+ location)
-  data/post/           # Blog posts (.md, .mdx)
-  layouts/             # Layout.astro, PageLayout.astro, MarkdownLayout.astro
-  pages/               # File-based routing
-  utils/               # blog.ts, images.ts, permalinks.ts, frontmatter.ts
-  config.yaml          # Site configuration (loaded as virtual module)
-  navigation.ts        # Navigation structure
-  types.d.ts           # TypeScript type definitions
-vendor/integration/    # Custom Astro integration for config loading
+    common/    # Image, Metadata, Analytics, ToggleTheme
+    ui/        # Button, Form, Headline, Timeline, WidgetWrapper
+    widgets/   # Hero, Features, Bento, Pricing, Comparison, FAQs, Header, Footer…
+    blog/      # SinglePost, List, Pagination, Tags
+    CustomStyles.astro  # colour/font CSS variables (light + dark)
+  content.config.ts    # content collections (glob loader)
+  data/post/           # articles (.md, .mdx)
+  data/products.ts     # single source of truth for the catalogue
+  layouts/             # Layout, PageLayout, MarkdownLayout
+  pages/               # file-based routes (trailing slash canonical)
+  utils/               # blog, images, permalinks, frontmatter
+  config.yaml          # site config, loaded as `astrowind:config`
+  navigation.ts        # header/footer links
+vendor/integration/    # config-loading integration
 ```
 
-### Path Aliases
+- Path alias `~/` → `src/`. Site config exports `SITE`, `I18N`, `METADATA`, `APP_BLOG`, `UI`, `ANALYTICS` from `astrowind:config`.
+- Tailwind is configured in CSS (`@theme`, `@utility`, `@variant dark`), with `@tailwindcss/vite` in `astro.config.ts`. Use `twMerge()` for conditional classes and `class:list` for toggles.
+- Content collections use Astro's Content Layer API; posts live in `src/data/post/`.
+- Images: local files go through `astro:assets` (Sharp); remote images via Unpic. Hero images use `loading="eager"` + `fetchpriority="high"`.
 
-Use `~/` to import from `src/`:
+## Deployment
 
-```typescript
-import Image from '~/components/common/Image.astro';
-import { SITE } from 'astrowind:config';
-```
+Push to `main` triggers a Cloudflare Workers build for the `astrowind-extos` service. There is no `wrangler deploy` step and no Cloudflare token in this environment. Do not add one.
 
-### Configuration System
+- Work on a branch, open a PR, let CI run, then merge. Never push directly to `main` unless Rachid asks.
+- Routes are served with a trailing slash; `/path` returns a 307 to `/path/`. Internal links must include the trailing slash to avoid redirects.
 
-Site config lives in `src/config.yaml` and is loaded as a Vite virtual module `astrowind:config` by the custom integration in `vendor/integration/`. Exports: `SITE`, `I18N`, `METADATA`, `APP_BLOG`, `UI`, `ANALYTICS`.
+## Working with Jules (cloud agent)
 
-## Tailwind CSS v4
+Jules clones this repo, reads this file, and opens PRs. Tasks must therefore be self-contained and safe if the plan is auto-approved.
 
-Configuration is CSS-first in `src/assets/styles/tailwind.css`:
+- **One concern per task.** State the goal, the files in scope, the acceptance check, and what not to touch.
+- **PR only.** Never merge, never push to `main`, never touch `.github/workflows/` unless the task is explicitly about CI.
+- **Report in the final message.** The VM console is not retrievable; if the task is read-only, require the findings in the last agent message.
+- **Run `npm run build` and `npm run check:eslint`** before finishing. Do not run `check:astro`.
+- **Do not add dependencies** without approval; this site is intentionally small.
+- **Do not edit** `src/data/products.ts` availability/price fields unless the task says so; those encode business state.
 
-- **Theme tokens:** `@theme { --color-primary: var(--aw-color-primary); ... }`
-- **Custom utilities:** `@utility bg-page { ... }`
-- **Dark mode:** Class-based via `@variant dark (&:where(.dark, .dark *))`
-- **Plugins:** `@plugin "@tailwindcss/typography"`
-- **Custom variant:** `@custom-variant intersect (&:not([no-intersect]))`
+## Verification checklist
 
-CSS variables for colors/fonts are defined in `src/components/CustomStyles.astro` with light/dark theme variants.
+Before calling a change done:
 
-The Vite plugin `@tailwindcss/vite` is configured in `astro.config.ts` (not as an Astro integration).
-
-### Class Merging
-
-Components use `twMerge` from `tailwind-merge` v3 for conditional class composition.
-
-## Content Collections
-
-Defined in `src/content.config.ts` using Astro's Content Layer API with `glob()` loader. Posts are in `src/data/post/` as `.md` or `.mdx` files.
-
-Post frontmatter: `title` (required), `publishDate`, `updateDate`, `draft`, `excerpt`, `image`, `category`, `tags`, `author`, `metadata`.
-
-## Component Patterns
-
-- Props extend interfaces from `~/types`
-- Use `class:list` for conditional classes
-- Use `twMerge()` when accepting className overrides
-- Use named slots for layout composition
-- Widget components accept standardized props (see `~/types`)
-
-## Image Handling
-
-`src/components/common/Image.astro` supports:
-
-- Local images via `astro:assets` (optimized by Sharp)
-- Remote images via Unpic CDN
-- Allowed domains (for providers Unpic can't detect, processed by Sharp): `cdn.pixabay.com`
-
-Hero images use `loading="eager"` and `fetchpriority="high"`.
-
-## Fonts
-
-Fonts are handled by Astro's native **Fonts API**, configured in `astro.config.ts` under the `fonts` key (provider, family, `cssVariable`) and injected via the `<Font />` component in `src/layouts/Layout.astro`. Astro self-hosts, subsets, preloads, and generates metric-adjusted fallbacks. To change the typeface, edit the `fonts` entry and point `--aw-font-*` in `CustomStyles.astro` at the new `cssVariable`.
-
-## Third-party Scripts (Partytown)
-
-`@astrojs/partytown` is wired as an **opt-in** in `astro.config.ts`, gated behind `const hasExternalScripts = false`. Set it to `true` to offload third-party scripts (e.g. Google Analytics via `analytics.vendors.googleAnalytics.partytown`) to a web worker. It is disabled by default so the base template ships no external scripts.
-
-## Content Security Policy
-
-Astro's native CSP is intentionally **not** enabled in this version: it is incompatible with `<ClientRouter />` view transitions (shipped on by default) and would break the arbitrary third-party scripts a template user typically adds. CSP is deferred to AstroWind v2, where the component model (and optional SSR) make it clean and opt-in.
-
-## Verification Checklist
-
-After changes, always verify:
-
-1. `npm run build` succeeds
-2. `npm run check` passes (astro check + ESLint + Prettier)
-3. Visual check in browser: homepage, blog, dark mode, mobile menu
-4. Structured data describes the site it is on: the `WebSite` / `Organization` block in `src/pages/index.astro` is built only from `config.yaml`; anything you add there must be true for your site
+1. `npm run build` succeeds.
+2. `npm run check:eslint` and `npm run check:prettier` pass (or run `npm run fix` and re-check).
+3. Routes render: `/`, `/extensions/`, each `/extensions/<slug>/`, `/about/`, `/contact/`, `/privacy/`, `/terms/`.
+4. Light and dark theme, desktop and mobile nav.
+5. No claim on the page contradicts `src/data/products.ts`; no dead store links.
+6. New interactive elements have a visible `focus-visible` ring; images have dimensions or aspect ratio.
