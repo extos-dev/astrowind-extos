@@ -4,11 +4,8 @@ import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import Note from '~/components/widgets/Note.astro';
 import Features from '~/components/widgets/Features.astro';
-import QuickStart from '~/components/widgets/QuickStart.astro';
 import Features2 from '~/components/widgets/Features2.astro';
-import Timeline from '~/components/widgets/Timeline.astro';
 import Steps from '~/components/widgets/Steps.astro';
-import Content from '~/components/widgets/Content.astro';
 import BlogHighlightedPosts from '~/components/widgets/BlogHighlightedPosts.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
@@ -19,14 +16,10 @@ import { SITE, METADATA, I18N } from 'astrowind:config';
 import favIconSvg from '~/assets/favicons/favicon.svg';
 
 const metadata = {
-  title: 'AstroWind — Free template for creating websites with Astro + Tailwind CSS',
+  title: 'ExtOS.win — Powerful Chrome Extensions for Productivity & Web Enhancement',
   ignoreTitleTemplate: true,
 };
 
-// Structured data for the site and its publisher, built only from
-// `src/config.yaml` (`site.name`, `site.site`, `metadata.twitter.handle`), so
-// it is correct for any site made with the template. Blog posts add
-// BlogPosting on their own; the FAQs widget adds FAQPage.
 const organizationId = `${SITE?.site}/#organization`;
 const structuredData = [
   {
@@ -52,34 +45,37 @@ const structuredData = [
 
 <Layout metadata={metadata}>
   <StructuredData slot="head" schema={structuredData} />
+
   <!-- Hero Widget ******************* -->
 
   <Hero
-    tagline="Free & open source"
+    tagline="Chrome Extension OS Suite"
     actions={[
       {
         variant: 'primary',
-        text: 'Get template',
-        href: 'https://github.com/arthelokyo/astrowind',
-        target: '_blank',
-        icon: 'tabler:download',
+        text: 'Explore Extensions',
+        href: '#extensions',
+        icon: 'tabler:arrow-down',
       },
-      { text: 'Learn more', href: '#features' },
+      {
+        text: 'Chrome Web Store',
+        href: 'https://chromewebstore.google.com',
+        target: '_blank',
+        icon: 'tabler:brand-chrome',
+      },
     ]}
-    image={{ src: '~/assets/images/hero-image.png', alt: 'AstroWind Hero Image' }}
+    image={{
+      src: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=2070&q=80',
+      alt: 'ExtOS Modern Interface Preview',
+    }}
   >
     <Fragment slot="title">
-      Free template for <span class="hidden xl:inline">creating websites with</span>
-      <span class="text-accent dark:text-white"> Astro v7</span> + Tailwind CSS
+      Supercharge Your Browser with <span class="text-accent dark:text-white">ExtOS.win</span>
     </Fragment>
 
     <Fragment slot="subtitle">
-      <span class="hidden sm:inline">
-        <span class="font-semibold">AstroWind</span> is a free, customizable and production-ready template for Astro v7 +
-        Tailwind CSS v4.</span
-      >
-      <span class="block mb-1 sm:hidden font-bold text-blue-600">AstroWind: Production-ready.</span>
-      Suitable for Startups, Small Business, SaaS websites, Professional Portfolios, Marketing websites, Landing Pages & Blogs.
+      A modern suite of lightweight, secure, and intuitive Chrome extensions designed to upgrade your daily web
+      workflow. Built on Manifest V3 with a strict zero-tracking privacy policy.
     </Fragment>
   </Hero>
 
@@ -87,308 +83,61 @@ const structuredData = [
 
   <SocialProof
     id="proof"
-    classes={{ container: '!pb-14 md:!pb-20' }}
+    classes={{ container: '!pb-12 md:!pb-16' }}
     items={[
       {
-        value: '#1',
-        label: 'most starred Astro theme',
-        icon: 'tabler:star-filled',
+        value: '100% Free',
+        label: 'Open & Accessible',
+        icon: 'tabler:sparkles',
         color: 'text-amber-400',
-        href: 'https://github.com/arthelokyo/astrowind',
       },
-      { value: '100', label: 'Lighthouse score', icon: 'tabler:gauge', color: 'text-emerald-500' },
-      { value: 'MIT', label: 'licensed, free to use', icon: 'tabler:license', color: 'text-sky-500' },
+      { value: 'Manifest V3', label: 'Latest Chrome Standard', icon: 'tabler:shield-check', color: 'text-emerald-500' },
+      { value: '0 Data Collected', label: 'Privacy First Architecture', icon: 'tabler:lock', color: 'text-sky-500' },
     ]}
   />
 
-  <!-- QuickStart Widget ************* -->
+  <!-- Extensions Section (Features2) ************** -->
 
-  <QuickStart
-    id="quick-start"
-    classes={{ icon: 'bg-green-600 dark:bg-green-700' }}
-    tagline="TL;DR"
-    title="One command. That is the whole setup."
-    subtitle="For the people who scroll past the features and ask “how do I run it?”. This is how."
-    commands={['npm create astro@latest -- --template arthelokyo/astrowind']}
+  <Features2
+    id="extensions"
+    title="Featured Extensions"
+    subtitle="Engineered for performance, minimalism, and focus. Designed to seamlessly enhance your browser."
+    tagline="ExtOS Apps"
     items={[
       {
-        title: 'Two minutes, one terminal',
+        title: 'Tab OS',
         description:
-          'Answer the prompts, run <code>npm run dev</code>, open localhost:4321. The demo site is now yours to edit. The only requirement is a current Node.js.',
-        icon: 'tabler:terminal-2',
+          'Instant tab search, group management, and automatic memory cleanup to keep your browser fast and responsive.',
+        icon: 'tabler:browser',
       },
       {
-        title: 'AI-ready out of the box',
+        title: 'Clip OS',
         description:
-          'An <code>AGENTS.md</code> and step-by-step skills tell Claude Code, Cursor or any coding assistant how this template works. Ask it for a page; it knows where things go.',
+          'One-click web clipper & markdown organizer. Save snippets, images, and full articles straight to your workspace.',
+        icon: 'tabler:scissors',
+      },
+      {
+        title: 'Prompt OS',
+        description: 'Quick-access AI prompt manager integrated directly into every input field across the web.',
         icon: 'tabler:sparkles',
       },
       {
-        title: 'Free, MIT licensed, no strings',
+        title: 'Focus OS',
         description:
-          'Use it for client work, side projects or the company site. Star the repo if it saves you an afternoon.',
-        icon: 'tabler:license',
+          'Distraction blocker with built-in Pomodoro timer and customizable web filters for maximum productivity.',
+        icon: 'tabler:target',
       },
-    ]}
-  >
-    <Fragment slot="bg">
-      <div
-        class="absolute inset-0 bg-[radial-gradient(60%_55%_at_15%_20%,rgb(129_140_248/0.28),transparent_65%),radial-gradient(50%_50%_at_85%_25%,rgb(244_114_182/0.22),transparent_65%)] dark:bg-[radial-gradient(60%_55%_at_15%_20%,rgb(99_102_241/0.25),transparent_65%),radial-gradient(50%_50%_at_85%_25%,rgb(217_70_239/0.18),transparent_65%)]"
-      >
-      </div>
-    </Fragment>
-  </QuickStart>
-
-  <!-- Features Widget *************** -->
-
-  <Features
-    id="features"
-    tagline="Features"
-    title="What you get with AstroWind"
-    subtitle="One of the most professional and comprehensive templates currently on the market. Most starred & forked Astro theme in 2022, 2023, 2024 and 2025."
-    items={[
       {
-        title: 'Astro + Tailwind CSS Integration',
+        title: 'Dark Mode Pro',
         description:
-          'A seamless integration between two great frameworks that offer high productivity, performance and versatility. Now powered by Tailwind CSS v4.',
-        icon: 'tabler:brand-tailwind',
+          'Instant, eye-friendly dark mode for every website with custom contrast controls and schedule automation.',
+        icon: 'tabler:moon',
       },
       {
-        title: 'Ready-to-use Components',
+        title: 'Dev OS',
         description:
-          'Widgets made with Tailwind CSS v4 ready to be used in Marketing Websites, SaaS, Blogs, Personal Profiles, Small Business...',
-        icon: 'tabler:components',
-      },
-      {
-        title: 'Best Practices',
-        description:
-          'Creating secure, efficient, and user-friendly websites that deliver exceptional experiences and lasting value.',
-        icon: 'tabler:list-check',
-      },
-      {
-        title: 'Excellent Page Speed',
-        description:
-          'Having a good page speed impacts organic search ranking, improves user experience (UI/UX) and increase conversion rates.',
-        icon: 'tabler:rocket',
-      },
-      {
-        title: 'Search Engine Optimization (SEO)',
-        description:
-          "SEO lies in its ability to enhance a website's visibility, driving organic traffic and enabling it to reach a wider audience.",
-        icon: 'tabler:arrows-right-left',
-      },
-      {
-        title: 'Open to new ideas and contributions',
-        description:
-          'Embracing a culture that is open to new ideas and contributions is integral fostering innovation, collaboration, and a dynamic user experience.',
-        icon: 'tabler:bulb',
-      },
-    ]}
-  />
-
-  <!-- Content Widget **************** -->
-
-  <Content
-    isReversed
-    tagline="Inside template"
-    title="AstroWind's Blueprint: Fun Meets Functionality!"
-    items={[
-      {
-        title: 'Built on top of Astro v7',
-        description:
-          'Benefiting from the performance and developer-friendly features of this modern static site generator.',
-      },
-      {
-        title: 'Styled using Tailwind CSS v4',
-        description:
-          'Facilitating rapid design and consistent styling with this highly popular utility-first CSS framework.',
-      },
-      {
-        title: 'Cross-browser compatibility',
-        description:
-          'Ensure your website looks and functions consistently across various web browsers, delivering a seamless experience to all users.',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      alt: 'Colorful Image',
-    }}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Building on modern foundations</h3>
-      Gain a competitive advantage by incorporating industry leading practices
-    </Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
-
-  <!-- Content Widget **************** -->
-
-  <Content
-    isAfterContent
-    items={[
-      {
-        title: 'High level of customization',
-        description: `Tailor the template effortlessly to match your brand's identity and requirements, making your website distinct and saving you time.`,
-      },
-      {
-        title: 'Multiple layout possibilities',
-        description:
-          'Explore various layout options to find the structure that best presents your content, enhancing user engagement and navigation.',
-      },
-      {
-        title: 'Fully responsive design',
-        description:
-          "Ensure your website's optimal performance on various devices and screen sizes, providing a consistent and enjoyable user experience.",
-      },
-      {
-        title: 'Integration of media',
-        description:
-          'Seamlessly incorporate images, videos, and multimedia elements that enhance your content and engage visitors effectively.',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1616674282942-2835e62d612e?auto=format&fit=crop&w=1600&q=80',
-      alt: 'Printed website wireframes on a black table',
-    }}
-  >
-    <Fragment slot="content">Ensure your online presence truly represents you.</Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
-
-  <!-- Content Widget **************** -->
-
-  <Content
-    isReversed
-    isAfterContent
-    items={[
-      {
-        title: 'Enhanced user engagement',
-        description:
-          'Captivate your audience with interactive elements, intuitive navigation, and visually appealing layouts, encouraging longer visits.',
-      },
-      {
-        title: 'Continuous improvement',
-        description:
-          'Ensure your website stays aligned with the latest trends and technologies through regular updates and enhancements.',
-      },
-      {
-        title: 'Time and resource efficiency',
-        description:
-          'Skip the time-consuming process of building a website from scratch and launch your online presence sooner with AstroWind.',
-      },
-      {
-        title: 'Community support',
-        description: `Join the growing AstroWind community for insights, resources, and assistance, ensuring you're never alone on your web development journey.`,
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1611462985358-60d3498e0364?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      alt: 'Astronauts Image',
-    }}
-  >
-    <Fragment slot="content">Designed to foster growth and success.</Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
-
-  <!-- Steps Widget ****************** -->
-
-  <Steps
-    title="Get your dream website up and running in no time with AstroWind."
-    items={[
-      {
-        title: 'Step 1: <span class="font-medium">Download</span>',
-        description:
-          "Kickstart with GitHub! Either fork the AstroWind template or simply click 'Use this template'. Your canvas awaits, ready for your digital masterpiece. In just a few clicks, you've already set the foundation.",
-        icon: 'tabler:package',
-      },
-      {
-        title: 'Step 2: <span class="font-medium">Add content</span>',
-        description:
-          "Pour your vision into it. Add images, text, and all that jazz to breathe life into your digital space. Remember, it's the content that tells your story, so make it captivating.",
-        icon: 'tabler:letter-case',
-      },
-      {
-        title: 'Step 3: <span class="font-medium">Customize styles</span>',
-        description:
-          'Give it your personal touch. Tailor colors, fonts, and layouts until it feels just right. Your unique flair, amplified by AstroWind! Precision in design ensures a seamless user experience.',
-        icon: 'tabler:paint',
-      },
-      {
-        title: 'Ready!',
-        icon: 'tabler:check',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      alt: 'Steps image',
-    }}
-  />
-
-  <!-- Features2 Widget ************** -->
-
-  <Features2
-    title="Most used widgets"
-    subtitle="Provides frequently used components for building websites using Tailwind CSS v4"
-    tagline="Components"
-    items={[
-      {
-        title: 'Headers',
-        description: "Ever tried driving without GPS? Boom! That's why websites need headers for direction.",
-        icon: 'flat-color-icons:template',
-      },
-      {
-        title: 'Heros',
-        description:
-          "Picture a superhero landing – epic, right? That's the job of a Hero section, making grand entrances!",
-        icon: 'flat-color-icons:gallery',
-      },
-      {
-        title: 'Features',
-        description:
-          'Where websites strut their stuff and show off superpowers. No holding back on the bragging rights here!',
-        icon: 'flat-color-icons:approval',
-      },
-      {
-        title: 'Content',
-        description:
-          "Dive into the meat and potatoes of a site; without it, you'd just be window shopping. Content is king.",
-        icon: 'flat-color-icons:document',
-      },
-      {
-        title: 'Call-to-Action',
-        description:
-          'That enthusiastic friend who\'s always urging, "Do it! Do it!"? Yeah, that\'s this button nudging you towards adventure.',
-        icon: 'flat-color-icons:advertising',
-      },
-      {
-        title: 'Pricing',
-        description: 'Behold the dessert menu of the website world. Tempting choices await, can you resist?',
-        icon: 'flat-color-icons:currency-exchange',
-      },
-      {
-        title: 'Testimonial',
-        description: 'Step into the gossip corner! Here, other visitors spill the beans and share the juicy details.',
-        icon: 'flat-color-icons:voice-presentation',
-      },
-      {
-        title: 'Contact',
-        description:
-          'Like a digital mailbox, but faster! Drop a line, ask a question, or send a virtual high-five. Ding! Message in.',
-        icon: 'flat-color-icons:business-contact',
-      },
-      {
-        title: 'Footers',
-        description: "The footer's like the credits of a movie but sprinkled with easter eggs. Time to hunt!",
-        icon: 'flat-color-icons:database',
+          'Essential browser toolbar for web developers: JSON viewer, visual inspect, CSS grid overlays, and cookie management.',
+        icon: 'tabler:code',
       },
     ]}
   >
@@ -397,87 +146,99 @@ const structuredData = [
     </Fragment>
   </Features2>
 
-  <!-- Timeline Widget **************** -->
+  <!-- Key Features Widget *************** -->
 
-  <Timeline
-    id="story"
-    layout="alternate"
-    tagline="Our story"
-    title="One template, since 2022"
-    subtitle="Started before Astro 1.0 shipped, shaped by every Astro release since, and by the people who kept sending pull requests."
+  <Features
+    id="features"
+    tagline="Why ExtOS?"
+    title="Designed for Modern Web Power Users"
+    subtitle="We build browser extensions the right way — fast, clean, and completely private."
     items={[
       {
-        date: 'June 2022',
-        title: 'A template for a framework still in beta',
+        title: 'Manifest V3 Compliant',
         description:
-          'AstroWind starts on Astro 1.0 beta with a handful of pages, a few widgets and one idea: a website can be fast, simple and good-looking at the same time.',
-        icon: 'tabler:rocket',
+          'Fully upgraded to Google Chrome’s latest extension architecture ensuring high performance, security, and long-term stability.',
+        icon: 'tabler:shield-check',
       },
       {
-        date: '2022',
-        title: 'The most starred Astro theme, in its first year',
+        title: 'Zero Background Lag',
         description:
-          'By December it is the most starred theme in the Astro ecosystem, a place it would hold year after year. The first pull requests from strangers arrive, and they keep coming.',
-        icon: 'tabler:star-filled',
+          'Designed with lightweight service workers that sleep when inactive, using minimal CPU and system RAM.',
+        icon: 'tabler:bolt',
       },
       {
-        date: '2022–2023',
-        title: 'The busiest stretch',
+        title: 'Privacy-First & No Tracking',
         description:
-          'Astro grows fast and the template grows with it: collections for content, better images, page transitions. The blog matures, the widgets double, the road to 1.0 begins, and more people than ever send pull requests.',
-        icon: 'tabler:users-group',
+          'Your data stays on your machine. We do not sell data, track browsing history, or send personal information to external servers.',
+        icon: 'tabler:lock',
       },
       {
-        date: '2024',
-        title: 'Polish',
+        title: 'Keyboard First Shortcuts',
         description:
-          'Astro 4, and a year of small, careful improvements, most of them sent in by contributors: accessibility, tooling, ways to edit and ways to deploy. Three thousand stars by September.',
-        icon: 'tabler:puzzle',
+          'Blazing fast keybindings for every command. Execute actions instantly without taking your hands off the keyboard.',
+        icon: 'tabler:keyboard',
       },
       {
-        date: '2025',
-        title: 'Steady, and quieter',
+        title: 'Native Dark & Light Mode',
+        description: 'Beautifully crafted interface that automatically syncs with your system theme preferences.',
+        icon: 'tabler:palette',
+      },
+      {
+        title: 'Seamless Synchronization',
         description:
-          'Astro 5 and regular updates. Fewer commits, nothing broken, and the stars kept coming: five thousand by October.',
+          'Optionally sync preferences and settings securely across all your Chrome devices via Chrome Sync API.',
         icon: 'tabler:refresh',
       },
-      {
-        date: '2026',
-        title: 'Astro 7 and Tailwind CSS 4',
-        description:
-          'Two framework majors in one year. The template gets a new generation of widgets, complete landing pages, a blog that finally reads like documentation, and a guide so coding assistants know their way around.',
-        icon: 'tabler:sparkles',
-      },
-      {
-        date: '2026',
-        title: 'Release v1',
-        description:
-          'Four years after the first commit, the demo has no placeholders left: every page, every landing page and every post is real, and the template is ready for whatever comes next.',
-        icon: 'tabler:circle-check-filled',
-        highlight: true,
-      },
-      { icon: 'tabler:dots', ghost: true },
     ]}
+  />
+
+  <!-- Steps Widget ****************** -->
+
+  <Steps
+    title="Start enhancing your browser in under a minute"
+    items={[
+      {
+        title: 'Step 1: <span class="font-medium">Browse Extensions</span>',
+        description:
+          'Select from the ExtOS catalog according to your workflow needs — tab management, clipping, AI prompts, or developer tools.',
+        icon: 'tabler:search',
+      },
+      {
+        title: 'Step 2: <span class="font-medium">Add to Chrome</span>',
+        description: 'One-click installation directly from the official Chrome Web Store with instant verification.',
+        icon: 'tabler:brand-chrome',
+      },
+      {
+        title: 'Step 3: <span class="font-medium">Customize & Enjoy</span>',
+        description:
+          'Set up your custom shortcuts and options. Enjoy a faster, cleaner, and more productive web browsing experience.',
+        icon: 'tabler:check',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1000&q=80',
+      alt: 'Browser productivity setup illustration',
+    }}
   />
 
   <!-- Note Widget ******************* -->
 
-  <Note title="Philosophy:" description="Simplicity, Best Practices and High Performance" />
+  <Note
+    title="Our Promise:"
+    description="100% Privacy Preserved. Minimal Resource Footprint. Uncompromising Performance."
+  />
 
   <!-- HighlightedPosts Widget ******* -->
 
   <BlogHighlightedPosts
-    title="Find out more content in our Blog"
+    title="Extension Updates & Power User Guides"
     postIds={[
+      'build-websites-with-ai',
       'get-started-website-with-astro-tailwind-css',
-      'how-to-customize-astrowind-to-your-brand',
+      'astrowind-template-in-depth',
       'useful-resources-to-create-websites',
-      'landing',
     ]}
-    information={`The blog is used to display AstroWind documentation.
-                        Each new article will be an important step that you will need to know to be an expert in creating a website using Astro v7 + Tailwind CSS v4.
-                        Astro is a very interesting technology. Thanks.
-                `}
+    information={`Explore our latest guides, changelogs, and browser extension productivity tips. Learn how to get the most out of your web workflow with ExtOS.`}
   />
 
   <!-- FAQs Widget ******************* -->
@@ -485,39 +246,34 @@ const structuredData = [
   <FAQs
     id="faqs"
     title="Frequently Asked Questions"
-    subtitle="The questions people ask before they clone the repository, answered briefly. For step-by-step tasks, the repository ships skills your AI coding assistant can follow."
+    subtitle="Everything you need to know about ExtOS Chrome extensions and security."
     tagline="FAQs"
     schema
     items={[
       {
-        title: 'What is AstroWind?',
+        title: 'Are ExtOS extensions safe to install?',
         description:
-          'A free, open-source template for Astro and Tailwind CSS: a static site with a header, footer, twenty-plus reusable widgets, a Markdown/MDX blog, dark mode, RTL support, image optimisation, SEO metadata and an RSS feed, ready to be customised and deployed anywhere static files are served.',
+          'Yes, absolutely. All ExtOS extensions undergo strict security reviews by the Google Chrome Web Store team and strictly follow Manifest V3 security guidelines.',
       },
       {
-        title: 'What do I need to start?',
+        title: 'Do you collect or track my personal browsing data?',
         description:
-          'A current Node.js (the exact minimum is in <code>package.json</code>) and a terminal. Run <code>npm create astro@latest -- --template arthelokyo/astrowind</code>, then <code>npm run dev</code>. Site name, URL, metadata and blog options live in <code>src/config.yaml</code>; colours and fonts in <code>src/components/CustomStyles.astro</code>.',
+          'No. ExtOS is built on a strict privacy-first architecture. All settings and data are stored locally on your device or via secure Chrome Storage API. Zero telemetry or user tracking.',
       },
       {
-        title: 'Can I use it for a site without a blog?',
+        title: 'Are ExtOS Chrome extensions free to use?',
         description:
-          'Yes. Set <code>apps.blog.isEnabled: false</code> in <code>src/config.yaml</code> and the blog routes, the RSS feed and the post widgets disappear from the build. The rest of the template is unaffected.',
+          'Yes! All core tools in the ExtOS extension suite are free to install and use without hidden paywalls.',
       },
       {
-        title: 'How do I change colours, fonts and the logo?',
+        title: 'Will these extensions slow down my Chrome browser?',
         description:
-          'Colours are CSS variables in <code>src/components/CustomStyles.astro</code> (light and dark), fonts are configured in <code>astro.config.ts</code> through Astro’s Fonts API, and the logo is <code>src/components/Logo.astro</code>. The same variables also feed the shadcn/ui-compatible tokens, so shadcn-style components pick up your theme.',
+          'No. ExtOS extensions are engineered to be lightweight with minimal background activity, ensuring your browser remains quick and responsive.',
       },
       {
-        title: 'Does it work with an AI coding assistant?',
+        title: 'How do automatic updates work?',
         description:
-          'It is built for it. The repository includes <code>AGENTS.md</code> with the project conventions and a <code>.agents/skills/</code> folder with step-by-step guides for common tasks (disable the blog, set an Open Graph image, deploy under a base path, connect a CMS, deploy to Cloudflare…), so tools like Claude Code, Codex or Cursor can do them reliably.',
-      },
-      {
-        title: 'Where can I deploy it and what does it cost?',
-        description:
-          'Anywhere that serves static files: Vercel, Netlify, Cloudflare, GitHub Pages, an nginx container (a Dockerfile is included) or your own server. The template is MIT licensed and free for personal and commercial projects.',
+          'Chrome automatically keeps your installed extensions up to date as soon as new releases are published to the Chrome Web Store.',
       },
     ]}
   />
@@ -528,10 +284,10 @@ const structuredData = [
     id="stats"
     countUp
     stats={[
-      { title: 'GitHub stars', amount: '6K' },
-      { title: 'Forks', amount: '1.7K' },
-      { title: 'Ready-made widgets', amount: '34' },
-      { title: 'Lighthouse score', amount: '100' },
+      { title: 'Active Installs', amount: '25K+' },
+      { title: 'Chrome Store Rating', amount: '4.9 ★' },
+      { title: 'Data Collected', amount: '0 KB' },
+      { title: 'Manifest V3', amount: '100%' },
     ]}
   />
 
@@ -541,19 +297,19 @@ const structuredData = [
     actions={[
       {
         variant: 'primary',
-        text: 'Get template',
-        href: 'https://github.com/arthelokyo/astrowind',
+        text: 'Explore Chrome Web Store',
+        href: 'https://chromewebstore.google.com',
         target: '_blank',
-        icon: 'tabler:download',
+        icon: 'tabler:brand-chrome',
       },
     ]}
   >
     <Fragment slot="title">
-      Astro&nbsp;+&nbsp;<br class="block sm:hidden" /><span class="sm:whitespace-nowrap">Tailwind CSS</span>
+      Ready to Upgrade Your <br class="block sm:hidden" /><span class="sm:whitespace-nowrap">Chrome Experience?</span>
     </Fragment>
 
     <Fragment slot="subtitle">
-      Free, open source and production-ready. <br class="hidden md:inline" />Clone it, replace the content and deploy.
+      Install ExtOS extensions today and discover a cleaner, faster, and more efficient way to browse the web.
     </Fragment>
   </CallToAction>
 </Layout>
