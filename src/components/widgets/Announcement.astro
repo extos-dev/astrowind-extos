@@ -1,6 +1,6 @@
 ---
 // Thin bar above the header. Everything is a prop so a site can change the
-// message without touching the component; the defaults reproduce the demo.
+// message without touching the component; the defaults are ExtOS.win's.
 export interface Props {
   badge?: string;
   text?: string;
@@ -9,10 +9,10 @@ export interface Props {
 }
 
 const {
-  badge = 'NEW',
-  text = 'Astro v7 is now available! »',
-  href = 'https://astro.build/blog/astro-7/',
-  showStars = true,
+  badge = 'PRE-RELEASE',
+  text = 'Three local-first extensions in the pipeline — see what each one asks for »',
+  href = '/extensions',
+  showStars = false,
 } = Astro.props;
 ---
 

@@ -1,34 +1,18 @@
-import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
+import { getPermalink, getAsset } from './utils/permalinks';
 
 export const headerData = {
   links: [
-    {
-      text: 'Extensions',
-      href: getPermalink('/#extensions'),
-    },
-    {
-      text: 'Features',
-      href: getPermalink('/#features'),
-    },
-    {
-      text: 'FAQ',
-      href: getPermalink('/#faqs'),
-    },
-    {
-      text: 'Blog & Guides',
-      href: getBlogPermalink(),
-    },
-    {
-      text: 'About',
-      href: getPermalink('/about'),
-    },
+    { text: 'Extensions', href: getPermalink('/extensions') },
+    { text: 'How we build', href: getPermalink('/#principles') },
+    { text: 'FAQ', href: getPermalink('/#faqs') },
+    { text: 'About', href: getPermalink('/about') },
+    { text: 'Contact', href: getPermalink('/contact') },
   ],
   actions: [
     {
-      text: 'Chrome Web Store',
-      href: 'https://chromewebstore.google.com',
-      target: '_blank',
-      icon: 'tabler:brand-chrome',
+      text: 'Talk to us',
+      href: getPermalink('/contact'),
+      icon: 'tabler:mail',
     },
   ],
 };
@@ -38,25 +22,25 @@ export const footerData = {
     {
       title: 'Extensions',
       links: [
-        { text: 'Tab OS', href: getPermalink('/#extensions') },
-        { text: 'Clip OS', href: getPermalink('/#extensions') },
-        { text: 'Prompt OS', href: getPermalink('/#extensions') },
-        { text: 'Focus OS', href: getPermalink('/#extensions') },
+        { text: 'All extensions', href: getPermalink('/extensions') },
+        { text: 'TabWize Data Extractor', href: getPermalink('/extensions/tabwize-data-extractor') },
+        { text: 'InvoiceSnap Local', href: getPermalink('/extensions/invoicesnap-local') },
+        { text: 'Extension Security Audit', href: getPermalink('/extensions/extension-security-audit') },
       ],
     },
     {
-      title: 'Product',
+      title: 'How we build',
       links: [
-        { text: 'Features', href: getPermalink('/#features') },
+        { text: 'Principles', href: getPermalink('/#principles') },
+        { text: 'Local-first', href: getPermalink('/#local-first') },
         { text: 'FAQ', href: getPermalink('/#faqs') },
-        { text: 'Changelog & Blog', href: getBlogPermalink() },
+        { text: 'About', href: getPermalink('/about') },
       ],
     },
     {
       title: 'Company',
       links: [
-        { text: 'About ExtOS', href: getPermalink('/about') },
-        { text: 'Contact & Support', href: getPermalink('/contact') },
+        { text: 'Contact', href: getPermalink('/contact') },
         { text: 'Privacy Policy', href: getPermalink('/privacy') },
         { text: 'Terms of Service', href: getPermalink('/terms') },
       ],
@@ -67,11 +51,13 @@ export const footerData = {
     { text: 'Privacy Policy', href: getPermalink('/privacy') },
   ],
   socialLinks: [
-    { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
-    { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com' },
-    { ariaLabel: 'Twitter', icon: 'tabler:brand-x', href: 'https://x.com' },
+    { ariaLabel: 'GitHub', icon: 'tabler:brand-github', href: 'https://github.com/extos-dev' },
+    { ariaLabel: 'Email', icon: 'tabler:mail', href: 'mailto:hello@extos.win' },
   ],
   footNote: `
-    © ${new Date().getFullYear()} <a class="text-blue-600 underline dark:text-muted" href="https://extos.win">ExtOS.win</a> · All rights reserved.
+    © ${new Date().getFullYear()} <a class="text-blue-600 underline dark:text-muted" href="https://extos.win">ExtOS.win</a> · No cookies, no trackers.
   `,
 };
+
+// Kept for the RSS route if the blog is ever re-enabled.
+export const rssFeedUrl = getAsset('/rss.xml');

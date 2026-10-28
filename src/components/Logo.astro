@@ -2,8 +2,26 @@
 import { SITE } from 'astrowind:config';
 ---
 
-<span
-  class="self-center ml-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white"
->
-  🧩 {SITE?.name}
+<span class="self-center flex items-center gap-2">
+  <svg
+    class="h-8 w-8 shrink-0"
+    viewBox="0 0 32 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <defs>
+      <linearGradient id="extos-mark" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#0161EF"></stop>
+        <stop offset="1" stop-color="#6D28D9"></stop>
+      </linearGradient>
+    </defs>
+    <rect width="32" height="32" rx="8" fill="url(#extos-mark)"></rect>
+    <path d="M10 9h12v3.6h-8.2v3.1h7.3v3.6h-7.3v3.1H22V26H10V9Z" fill="white"></path>
+  </svg>
+  <span class="text-2xl md:text-xl font-bold tracking-tight text-gray-900 whitespace-nowrap dark:text-white"
+    >ExtOS<span class="text-primary dark:text-blue-300">.win</span></span
+  >
+  <span class="sr-only">{SITE?.name}</span>
 </span>

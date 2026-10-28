@@ -1,294 +1,106 @@
 ---
-import Features2 from '~/components/widgets/Features2.astro';
-import Features3 from '~/components/widgets/Features3.astro';
-import Hero from '~/components/widgets/Hero.astro';
-import Stats from '~/components/widgets/Stats.astro';
-import Steps2 from '~/components/widgets/Steps2.astro';
-import Team from '~/components/widgets/Team.astro';
-import Timeline from '~/components/widgets/Timeline.astro';
 import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+import { getPermalink } from '~/utils/permalinks';
 
 const metadata = {
-  title: 'About us',
+  title: 'About',
   description:
-    'About page demo built with AstroWind: hero, stats, feature grids and timelines ready to describe your company.',
+    'ExtOS.win is an independent studio building local-first Chrome extensions: small tools, minimal permissions, no accounts, no tracking.',
 };
 ---
 
 <Layout metadata={metadata}>
-  <!-- Hero Widget ******************* -->
-
-  <Hero
-    tagline="About us"
-    image={{
-      src: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      alt: 'Caos Image',
-    }}
-  >
-    <Fragment slot="title">
-      Elevate your online presence with our <br />
-      <span class="text-accent dark:text-white"> Beautiful Website Templates</span>
-    </Fragment>
-
-    <Fragment slot="subtitle">
-      Donec efficitur, ipsum quis congue luctus, mauris magna convallis mauris, eu auctor nisi lectus non augue. Donec
-      quis lorem non massa vulputate efficitur ac at turpis. Sed tincidunt ex a nunc convallis, et lobortis nisi tempus.
-      Suspendisse vitae nisi eget tortor luctus maximus sed non lectus.
-    </Fragment>
-  </Hero>
-
-  <!-- Stats Widget ****************** -->
-
-  <Stats
-    title="Statistics about us"
-    stats={[
-      { title: 'Offices', amount: '4' },
-      { title: 'Employees', amount: '248' },
-      { title: 'Templates', amount: '12' },
-      { title: 'Awards', amount: '24' },
-    ]}
+  <HeroText
+    badge="Independent studio"
+    tagline="About"
+    title="Small browser tools, built to be audited."
+    subtitle="ExtOS.win is an independent software studio. We build Chrome extensions that do one job, ask for the permission that job needs, and process your data on your machine."
+    callToAction={{ text: 'See the extensions', href: getPermalink('/extensions'), icon: 'tabler:puzzle' }}
+    callToAction2={{ text: 'Talk to us', href: getPermalink('/contact'), icon: 'tabler:mail' }}
   />
 
-  <!-- Features3 Widget ************** -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-16" aria-labelledby="story">
+    <div class="prose prose-lg dark:prose-invert mx-auto">
+      <h2 id="story">Why these extensions exist</h2>
+      <p>
+        Browser extensions have a trust problem. The useful ones ask for access to every page you visit, the polished
+        ones want an account, and the free ones sometimes pay for themselves with your browsing data. The category is
+        full of tools that are hard to audit and easy to forget about.
+      </p>
+      <p>
+        ExtOS.win is an attempt to build the opposite: small extensions with a visible job, a short permission list, and
+        a clear answer to “what leaves my device?”. Three are in the pipeline — one extracts structured data from a
+        page, one reads invoices without uploading them, one audits the extensions you already have installed.
+      </p>
+      <p>
+        None of them has a public Chrome Web Store listing yet. We would rather show you exactly what each one does and
+        what it asks for before there is an install button.
+      </p>
+    </div>
+  </section>
 
-  <Features3
-    title="Our templates"
-    subtitle="Etiam scelerisque, enim eget vestibulum luctus, nibh mauris blandit nulla, nec vestibulum risus justo ut enim. Praesent lacinia diam et ante imperdiet euismod."
-    columns={3}
-    isBeforeContent={true}
-    items={[
-      {
-        title: 'Educational',
-        description:
-          'Morbi faucibus luctus quam, sit amet aliquet felis tempor id. Cras augue massa, ornare quis dignissim a, molestie vel nulla.',
-        icon: 'tabler:template',
-      },
-      {
-        title: 'Interior Design',
-        description:
-          'Vivamus porttitor, tortor convallis aliquam pretium, turpis enim consectetur elit, vitae egestas purus erat ac nunc nulla.',
-        icon: 'tabler:template',
-      },
-      {
-        title: 'Photography',
-        description:
-          'Duis sed lectus in nisl vehicula porttitor eget quis odio. Aliquam erat volutpat. Nulla eleifend nulla id sem fermentum.',
-        icon: 'tabler:template',
-      },
-    ]}
-  />
-
-  <!-- Features3 Widget ************** -->
-
-  <Features3
-    columns={3}
-    isAfterContent={true}
-    items={[
-      {
-        title: 'E-commerce',
-        description:
-          'Rutrum non odio at vehicula. Proin ipsum justo, dignissim in vehicula sit amet, dignissim id quam. Sed ac tincidunt sapien.',
-        icon: 'tabler:template',
-      },
-      {
-        title: 'Blog',
-        description:
-          'Nullam efficitur volutpat sem sed fringilla. Suspendisse et enim eu orci volutpat laoreet ac vitae libero.',
-        icon: 'tabler:template',
-      },
-      {
-        title: 'Business',
-        description:
-          'Morbi et elit finibus, facilisis justo ut, pharetra ipsum. Donec efficitur, ipsum quis congue luctus, mauris magna.',
-        icon: 'tabler:template',
-      },
-      {
-        title: 'Branding',
-        description:
-          'Suspendisse vitae nisi eget tortor luctus maximus sed non lectus. Cras malesuada pretium placerat. Nullam venenatis dolor a ante rhoncus.',
-        icon: 'tabler:template',
-      },
-      {
-        title: 'Medical',
-        description:
-          'Vestibulum malesuada lacus id nibh posuere feugiat. Nam volutpat nulla a felis ultrices, id suscipit mauris congue. In hac habitasse platea dictumst.',
-        icon: 'tabler:template',
-      },
-      {
-        title: 'Fashion Design',
-        description:
-          'Maecenas eu tellus eget est scelerisque lacinia et a diam. Aliquam velit lorem, vehicula id fermentum et, rhoncus et purus.',
-        icon: 'tabler:template',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
-      alt: 'Colorful Image',
-    }}
-  />
-
-  <!-- Steps2 Widget ****************** -->
-
-  <Steps2
-    title="Our values"
-    subtitle="Maecenas eu tellus eget est scelerisque lacinia et a diam. Aliquam velit lorem, vehicula id fermentum et, rhoncus et purus. Nulla facilisi. Vestibulum malesuada lacus."
-    items={[
-      {
-        title: 'Customer-centric approach',
-        description:
-          'Donec id nibh neque. Quisque et fermentum tortor. Fusce vitae dolor a mauris dignissim commodo. Ut eleifend luctus condimentum.',
-      },
-      {
-        title: 'Constant Improvement',
-        description:
-          'Phasellus laoreet fermentum venenatis. Vivamus dapibus pulvinar arcu eget mattis. Fusce eget mauris leo.',
-      },
-      {
-        title: 'Ethical Practices',
-        description:
-          'Vestibulum imperdiet libero et lectus molestie, et maximus augue porta. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
-      },
-    ]}
-  />
-
-  <!-- Timeline Widget **************** -->
-
-  <Timeline
-    id="history"
-    tagline="Our story"
-    title="Achievements"
-    subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis, quam nec venenatis lobortis, mi risus tempus nulla, sed porttitor est nibh at nulla."
-    layout="alternate"
-    items={[
-      {
-        date: '2019',
-        title: 'The first template',
-        description: 'Nam malesuada urna in enim imperdiet tincidunt. Phasellus non tincidunt nisi, at elementum mi.',
-        icon: 'tabler:rocket',
-      },
-      {
-        date: '2021',
-        title: 'Global reach',
-        description:
-          'Cras semper nulla leo, eget laoreet erat cursus sed. Praesent faucibus massa in purus iaculis dictum.',
-        icon: 'tabler:globe',
-      },
-      {
-        date: '2023',
-        title: 'Positive customer feedback and reviews',
-        description:
-          'Phasellus lacinia cursus velit, eu malesuada magna pretium eu. Etiam aliquet tellus purus, blandit lobortis ex rhoncus vitae.',
-        icon: 'tabler:message-star',
-      },
-      {
-        date: '2026',
-        title: 'Awards and recognition as industry experts',
-        description: 'Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.',
-        icon: 'tabler:award',
-        highlight: true,
-      },
-    ]}
-  />
-
-  <!-- Team Widget ******************** -->
-
-  <Team
-    id="team"
-    tagline="The people"
-    title="Meet the team"
-    subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis, quam nec venenatis lobortis, mi risus tempus nulla."
-    members={[
-      {
-        name: 'Alicia Rivera',
-        role: 'Founder & CEO',
-        image: {
-          src: 'https://images.unsplash.com/photo-1618835962148-cf177563c6c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=930&q=80',
-          alt: 'Alicia Rivera',
-        },
-        bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        socials: [
-          { icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/', ariaLabel: 'LinkedIn' },
-          { icon: 'tabler:brand-x', href: 'https://x.com/', ariaLabel: 'X' },
-        ],
-      },
-      {
-        name: 'Daniel Okafor',
-        role: 'Lead developer',
-        image: {
-          src: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
-          alt: 'Daniel Okafor',
-        },
-        bio: 'Morbi sagittis, quam nec venenatis lobortis, mi risus tempus nulla.',
-        socials: [{ icon: 'tabler:brand-github', href: 'https://github.com/', ariaLabel: 'GitHub' }],
-      },
-      {
-        name: 'Mei Tanaka',
-        role: 'Product designer',
-        image: {
-          src: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
-          alt: 'Mei Tanaka',
-        },
-        bio: 'Sed porttitor est nibh at nulla. Cras semper nulla leo, eget laoreet erat.',
-        socials: [{ icon: 'tabler:brand-dribbble', href: 'https://dribbble.com/', ariaLabel: 'Dribbble' }],
-      },
-      {
-        name: 'Jonas Weber',
-        role: 'Customer success',
-        image: {
-          src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
-          alt: 'Jonas Weber',
-        },
-        bio: 'Praesent faucibus massa in purus iaculis dictum.',
-        socials: [{ icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/', ariaLabel: 'LinkedIn' }],
-      },
-    ]}
-  />
-
-  <!-- Features2 Widget ************** -->
-
-  <Features2
-    title="Our locations"
-    tagline="Find us"
-    columns={4}
-    items={[
-      {
-        title: 'EE.UU',
-        description: '1234 Lorem Ipsum St, 12345, Miami',
-      },
-      {
-        title: 'Spain',
-        description: '5678 Lorem Ipsum St, 56789, Madrid',
-      },
-      {
-        title: 'Australia',
-        description: '9012 Lorem Ipsum St, 90123, Sydney',
-      },
-      {
-        title: 'Brazil',
-        description: '3456 Lorem Ipsum St, 34567, São Paulo',
-      },
-    ]}
-  />
-
-  <!-- Features2 Widget ************** -->
-
-  <Features2
-    title="Technical Support"
-    tagline="Contact us"
+  <Features
+    id="principles"
+    tagline="The rules"
+    title="What we optimise for"
     columns={2}
     items={[
       {
-        title: 'Chat with us',
+        title: 'Auditability over polish',
         description:
-          'Integer luctus laoreet libero, auctor varius purus rutrum sit amet. Ut nec molestie nisi, quis eleifend mi.',
-        icon: 'tabler:messages',
+          'A permission list you can read and a data flow you can explain beat a feature list you cannot verify. Every product page is written to be checked, not skimmed.',
+        icon: 'tabler:search',
       },
       {
-        title: 'Call us',
+        title: 'One problem per product',
         description:
-          'Mauris faucibus finibus orci, in posuere elit viverra non. In hac habitasse platea dictumst. Cras lobortis metus a hendrerit congue.',
-        icon: 'tabler:headset',
+          'Feature creep is how extensions end up asking for everything. Each tool stays narrow enough that its permission set can stay narrow too.',
+        icon: 'tabler:focus-2',
+      },
+      {
+        title: 'No dark patterns',
+        description:
+          'No fake countdowns, no invented install numbers, no “free” tier that quietly uploads your data. If something is pre-release, the page says so.',
+        icon: 'tabler:eye-off',
+      },
+      {
+        title: 'Boring, current engineering',
+        description:
+          'Manifest V3, the side panel API, service workers that idle, and exports in formats other software can open. No proprietary lock-in for your own data.',
+        icon: 'tabler:tool',
       },
     ]}
   />
+
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 pb-16 md:pb-24" aria-labelledby="process">
+    <div class="prose prose-lg dark:prose-invert mx-auto">
+      <h2 id="process">How a release works</h2>
+      <ol>
+        <li><strong>Build the narrow version.</strong> One workflow, no accounts, local processing.</li>
+        <li><strong>Test it against real pages and real files.</strong> Not a demo dataset.</li>
+        <li><strong>Write down the permissions and the network calls</strong> before the listing exists.</li>
+        <li><strong>Submit to the Chrome Web Store.</strong> Nothing is distributed outside the store.</li>
+      </ol>
+      <p>
+        If an extension fails at step three — because a feature needs more access than the job is worth — it does not
+        ship.
+      </p>
+    </div>
+  </section>
+
+  <CallToAction
+    actions={[
+      { variant: 'primary', text: 'See the portfolio', href: getPermalink('/extensions'), icon: 'tabler:puzzle' },
+      { text: 'Ask about early access', href: getPermalink('/contact'), icon: 'tabler:mail' },
+    ]}
+  >
+    <Fragment slot="title">Building something in this space too?</Fragment>
+    <Fragment slot="subtitle">
+      We are happy to compare notes on Manifest V3, local processing, or what a permission actually costs a user.
+    </Fragment>
+  </CallToAction>
 </Layout>

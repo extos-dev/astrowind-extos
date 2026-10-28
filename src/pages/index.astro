@@ -1,22 +1,23 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 
-import Hero from '~/components/widgets/Hero.astro';
-import Note from '~/components/widgets/Note.astro';
-import Features from '~/components/widgets/Features.astro';
-import Features2 from '~/components/widgets/Features2.astro';
-import Steps from '~/components/widgets/Steps.astro';
-import BlogHighlightedPosts from '~/components/widgets/BlogHighlightedPosts.astro';
-import FAQs from '~/components/widgets/FAQs.astro';
-import Stats from '~/components/widgets/Stats.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
 import SocialProof from '~/components/widgets/SocialProof.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Features from '~/components/widgets/Features.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
 import StructuredData from '~/components/common/StructuredData.astro';
 import { SITE, METADATA, I18N } from 'astrowind:config';
 import favIconSvg from '~/assets/favicons/favicon.svg';
 
+import { products, availabilityLabel } from '~/data/products';
+import { getPermalink } from '~/utils/permalinks';
+
 const metadata = {
-  title: 'ExtOS.win — Powerful Chrome Extensions for Productivity & Web Enhancement',
+  title: 'ExtOS.win — Local-first Chrome extensions',
+  description:
+    'Small, focused Chrome extensions that process your data on your machine: extract page data, read invoices, audit installed extensions. Manifest V3, minimal permissions, no accounts.',
   ignoreTitleTemplate: true,
 };
 
@@ -40,276 +41,195 @@ const structuredData = [
     logo: new URL(favIconSvg.src, SITE?.site).toString(),
     ...(METADATA?.twitter?.handle ? { sameAs: [`https://x.com/${METADATA.twitter.handle.replace(/^@/, '')}`] } : {}),
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'ExtOS extensions',
+    itemListElement: products.map((product, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: product.name,
+      url: new URL(getPermalink(`/extensions/${product.slug}`), SITE?.site).toString(),
+    })),
+  },
 ];
 ---
 
 <Layout metadata={metadata}>
   <StructuredData slot="head" schema={structuredData} />
 
-  <!-- Hero Widget ******************* -->
+  <!-- Hero ************************** -->
 
-  <Hero
-    tagline="Chrome Extension OS Suite"
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Explore Extensions',
-        href: '#extensions',
-        icon: 'tabler:arrow-down',
-      },
-      {
-        text: 'Chrome Web Store',
-        href: 'https://chromewebstore.google.com',
-        target: '_blank',
-        icon: 'tabler:brand-chrome',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=2070&q=80',
-      alt: 'ExtOS Modern Interface Preview',
-    }}
-  >
-    <Fragment slot="title">
-      Supercharge Your Browser with <span class="text-accent dark:text-white">ExtOS.win</span>
-    </Fragment>
+  <HeroText
+    badge="Manifest V3 · Local-first"
+    tagline="ExtOS.win"
+    title="Chrome extensions that keep your data on your machine."
+    subtitle="Small, focused tools for the browser: extract a table, read an invoice, audit what your extensions can do. The work happens on your device, the permissions stay minimal, and nothing is uploaded."
+    callToAction={{ text: 'See the extensions', href: '#extensions', icon: 'tabler:arrow-down' }}
+    callToAction2={{ text: 'How we build', href: '#principles', icon: 'tabler:code' }}
+  />
 
-    <Fragment slot="subtitle">
-      A modern suite of lightweight, secure, and intuitive Chrome extensions designed to upgrade your daily web
-      workflow. Built on Manifest V3 with a strict zero-tracking privacy policy.
-    </Fragment>
-  </Hero>
-
-  <!-- SocialProof Widget ************ -->
+  <!-- Honest facts strip ************ -->
 
   <SocialProof
-    id="proof"
+    id="facts"
     classes={{ container: '!pb-12 md:!pb-16' }}
     items={[
-      {
-        value: '100% Free',
-        label: 'Open & Accessible',
-        icon: 'tabler:sparkles',
-        color: 'text-amber-400',
-      },
-      { value: 'Manifest V3', label: 'Latest Chrome Standard', icon: 'tabler:shield-check', color: 'text-emerald-500' },
-      { value: '0 Data Collected', label: 'Privacy First Architecture', icon: 'tabler:lock', color: 'text-sky-500' },
+      { value: '3', label: 'Extensions built', icon: 'tabler:puzzle', color: 'text-primary' },
+      { value: 'MV3', label: 'Manifest V3 only', icon: 'tabler:shield-check', color: 'text-emerald-500' },
+      { value: 'Local', label: 'Processing model', icon: 'tabler:device-laptop', color: 'text-sky-500' },
+      { value: '0', label: 'Trackers on this site', icon: 'tabler:eye-off', color: 'text-violet-500' },
     ]}
   />
 
-  <!-- Extensions Section (Features2) ************** -->
+  <!-- Extensions ******************** -->
 
   <Features2
     id="extensions"
-    title="Featured Extensions"
-    subtitle="Engineered for performance, minimalism, and focus. Designed to seamlessly enhance your browser."
-    tagline="ExtOS Apps"
-    items={[
-      {
-        title: 'Tab OS',
-        description:
-          'Instant tab search, group management, and automatic memory cleanup to keep your browser fast and responsive.',
-        icon: 'tabler:browser',
-      },
-      {
-        title: 'Clip OS',
-        description:
-          'One-click web clipper & markdown organizer. Save snippets, images, and full articles straight to your workspace.',
-        icon: 'tabler:scissors',
-      },
-      {
-        title: 'Prompt OS',
-        description: 'Quick-access AI prompt manager integrated directly into every input field across the web.',
-        icon: 'tabler:sparkles',
-      },
-      {
-        title: 'Focus OS',
-        description:
-          'Distraction blocker with built-in Pomodoro timer and customizable web filters for maximum productivity.',
-        icon: 'tabler:target',
-      },
-      {
-        title: 'Dark Mode Pro',
-        description:
-          'Instant, eye-friendly dark mode for every website with custom contrast controls and schedule automation.',
-        icon: 'tabler:moon',
-      },
-      {
-        title: 'Dev OS',
-        description:
-          'Essential browser toolbar for web developers: JSON viewer, visual inspect, CSS grid overlays, and cookie management.',
-        icon: 'tabler:code',
-      },
-    ]}
+    tagline="The extensions"
+    title="Three tools, one job each"
+    subtitle="Everything below is pre-release. Each page explains what the extension does, which permissions it asks for, and what leaves your device — before you install anything."
+    columns={3}
+    items={products.map((product) => ({
+      title: product.name,
+      description: `${product.summary}<br /><span class="mt-3 inline-block rounded-full border border-gray-300 px-2.5 py-0.5 text-xs font-semibold text-muted dark:border-slate-600">${availabilityLabel(product)}</span>`,
+      icon: product.icon,
+      href: getPermalink(`/extensions/${product.slug}`),
+    }))}
   >
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
     </Fragment>
   </Features2>
 
-  <!-- Key Features Widget *************** -->
+  <!-- Principles ******************** -->
 
   <Features
-    id="features"
-    tagline="Why ExtOS?"
-    title="Designed for Modern Web Power Users"
-    subtitle="We build browser extensions the right way — fast, clean, and completely private."
+    id="principles"
+    tagline="How we build"
+    title="Boring choices, on purpose"
+    subtitle="The rules we do not bend when shipping an extension."
     items={[
       {
-        title: 'Manifest V3 Compliant',
+        title: 'Local-first',
         description:
-          'Fully upgraded to Google Chrome’s latest extension architecture ensuring high performance, security, and long-term stability.',
-        icon: 'tabler:shield-check',
+          'If a job can run in the browser, it runs in the browser. When a product needs the network, its page says exactly what is sent and why.',
+        icon: 'tabler:device-laptop',
       },
       {
-        title: 'Zero Background Lag',
+        title: 'Minimal permissions',
         description:
-          'Designed with lightweight service workers that sleep when inactive, using minimal CPU and system RAM.',
-        icon: 'tabler:bolt',
+          'Every permission is listed with the reason it exists. No broad host access unless the core feature cannot work without it.',
+        icon: 'tabler:key',
       },
       {
-        title: 'Privacy-First & No Tracking',
+        title: 'One job per extension',
         description:
-          'Your data stays on your machine. We do not sell data, track browsing history, or send personal information to external servers.',
-        icon: 'tabler:lock',
+          'No tab manager bundled with a VPN. Small tools are easier to audit, cheaper to run, and easier to replace when you stop needing them.',
+        icon: 'tabler:box',
       },
       {
-        title: 'Keyboard First Shortcuts',
+        title: 'No accounts',
         description:
-          'Blazing fast keybindings for every command. Execute actions instantly without taking your hands off the keyboard.',
-        icon: 'tabler:keyboard',
+          'There is nothing to sign up for. Settings and working data live in Chrome storage on your device.',
+        icon: 'tabler:user-off',
       },
       {
-        title: 'Native Dark & Light Mode',
-        description: 'Beautifully crafted interface that automatically syncs with your system theme preferences.',
-        icon: 'tabler:palette',
-      },
-      {
-        title: 'Seamless Synchronization',
+        title: 'No tracking',
         description:
-          'Optionally sync preferences and settings securely across all your Chrome devices via Chrome Sync API.',
-        icon: 'tabler:refresh',
+          'This site serves static pages with no analytics and no cookies. The extensions do not ship telemetry SDKs.',
+        icon: 'tabler:eye-off',
       },
-    ]}
-  />
-
-  <!-- Steps Widget ****************** -->
-
-  <Steps
-    title="Start enhancing your browser in under a minute"
-    items={[
       {
-        title: 'Step 1: <span class="font-medium">Browse Extensions</span>',
+        title: 'Current platform',
         description:
-          'Select from the ExtOS catalog according to your workflow needs — tab management, clipping, AI prompts, or developer tools.',
-        icon: 'tabler:search',
-      },
-      {
-        title: 'Step 2: <span class="font-medium">Add to Chrome</span>',
-        description: 'One-click installation directly from the official Chrome Web Store with instant verification.',
+          'Manifest V3, service workers that sleep when idle, and no deprecated APIs kept alive with workarounds.',
         icon: 'tabler:brand-chrome',
       },
-      {
-        title: 'Step 3: <span class="font-medium">Customize & Enjoy</span>',
-        description:
-          'Set up your custom shortcuts and options. Enjoy a faster, cleaner, and more productive web browsing experience.',
-        icon: 'tabler:check',
-      },
     ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1000&q=80',
-      alt: 'Browser productivity setup illustration',
-    }}
   />
 
-  <!-- Note Widget ******************* -->
+  <!-- Local-first explainer ********* -->
 
-  <Note
-    title="Our Promise:"
-    description="100% Privacy Preserved. Minimal Resource Footprint. Uncompromising Performance."
-  />
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 pb-16 md:pb-24" aria-labelledby="local-first">
+    <div class="prose prose-lg dark:prose-invert mx-auto">
+      <h2 id="local-first">What “local-first” actually means here</h2>
+      <p>
+        It is easy to print a lock icon on a landing page. These are the specific promises behind ours, and they apply
+        to every extension on this site:
+      </p>
+      <ul>
+        <li>
+          <strong>Your content is not uploaded.</strong> Page captures, invoices and extension inventories are processed in
+          the browser and written to a local file or Chrome storage.
+        </li>
+        <li>
+          <strong>Network calls are named.</strong> If an extension talks to a server, its product page says which server,
+          what is sent, and what happens when the call fails.
+        </li>
+        <li>
+          <strong>No account, no profile.</strong> There is no sign-in, no user ID and no cross-device analytics profile.
+        </li>
+        <li>
+          <strong>Uninstalling removes the data.</strong> Chrome deletes extension storage when you remove the extension;
+          exported files stay wherever you saved them.
+        </li>
+      </ul>
+    </div>
+  </section>
 
-  <!-- HighlightedPosts Widget ******* -->
-
-  <BlogHighlightedPosts
-    title="Extension Updates & Power User Guides"
-    postIds={[
-      'build-websites-with-ai',
-      'get-started-website-with-astro-tailwind-css',
-      'astrowind-template-in-depth',
-      'useful-resources-to-create-websites',
-    ]}
-    information={`Explore our latest guides, changelogs, and browser extension productivity tips. Learn how to get the most out of your web workflow with ExtOS.`}
-  />
-
-  <!-- FAQs Widget ******************* -->
+  <!-- FAQs ************************** -->
 
   <FAQs
     id="faqs"
-    title="Frequently Asked Questions"
-    subtitle="Everything you need to know about ExtOS Chrome extensions and security."
     tagline="FAQs"
+    title="Questions worth asking before you install anything"
+    subtitle="Short answers. The product pages carry the detail."
     schema
     items={[
       {
-        title: 'Are ExtOS extensions safe to install?',
+        title: 'Can I install these extensions today?',
         description:
-          'Yes, absolutely. All ExtOS extensions undergo strict security reviews by the Google Chrome Web Store team and strictly follow Manifest V3 security guidelines.',
+          'Not yet. All three are pre-release and none has a public Chrome Web Store listing. The product pages describe what each one does and which permissions it requests, so you can decide before launch.',
       },
       {
-        title: 'Do you collect or track my personal browsing data?',
+        title: 'Do you collect my data?',
         description:
-          'No. ExtOS is built on a strict privacy-first architecture. All settings and data are stored locally on your device or via secure Chrome Storage API. Zero telemetry or user tracking.',
+          'No. This website is a set of static pages: no analytics, no cookies, no accounts. The extensions process data on your device, and each product page names the only outbound requests it makes.',
       },
       {
-        title: 'Are ExtOS Chrome extensions free to use?',
+        title: 'Why does an extension need access to websites?',
         description:
-          'Yes! All core tools in the ExtOS extension suite are free to install and use without hidden paywalls.',
+          'Because reading the page is the feature. TabWize reads a page only when you start a capture; it does not run in the background collecting browsing history. The exact access is listed per product.',
       },
       {
-        title: 'Will these extensions slow down my Chrome browser?',
+        title: 'What does it cost?',
         description:
-          'No. ExtOS extensions are engineered to be lightweight with minimal background activity, ensuring your browser remains quick and responsive.',
+          'Nothing is charged today. Pricing for each extension will be published on its product page and in the Chrome Web Store listing before it becomes available.',
       },
       {
-        title: 'How do automatic updates work?',
+        title: 'Which version of Chrome do I need?',
+        description: 'Chrome 116 or newer. All three extensions are Manifest V3 and use the side panel API.',
+      },
+      {
+        title: 'How do updates work?',
         description:
-          'Chrome automatically keeps your installed extensions up to date as soon as new releases are published to the Chrome Web Store.',
+          'Once an extension is installed from the Chrome Web Store, Chrome updates it automatically. Pre-release builds are loaded unpacked during testing and are not distributed.',
       },
     ]}
   />
 
-  <!-- Stats Widget ****************** -->
-
-  <Stats
-    id="stats"
-    countUp
-    stats={[
-      { title: 'Active Installs', amount: '25K+' },
-      { title: 'Chrome Store Rating', amount: '4.9 ★' },
-      { title: 'Data Collected', amount: '0 KB' },
-      { title: 'Manifest V3', amount: '100%' },
-    ]}
-  />
-
-  <!-- CallToAction Widget *********** -->
+  <!-- Call to action **************** -->
 
   <CallToAction
     actions={[
-      {
-        variant: 'primary',
-        text: 'Explore Chrome Web Store',
-        href: 'https://chromewebstore.google.com',
-        target: '_blank',
-        icon: 'tabler:brand-chrome',
-      },
+      { variant: 'primary', text: 'Talk to us', href: getPermalink('/contact'), icon: 'tabler:mail' },
+      { text: 'Read the privacy policy', href: getPermalink('/privacy'), icon: 'tabler:lock' },
     ]}
   >
-    <Fragment slot="title">
-      Ready to Upgrade Your <br class="block sm:hidden" /><span class="sm:whitespace-nowrap">Chrome Experience?</span>
-    </Fragment>
-
+    <Fragment slot="title">Want to know when the first extension ships?</Fragment>
     <Fragment slot="subtitle">
-      Install ExtOS extensions today and discover a cleaner, faster, and more efficient way to browse the web.
+      Tell us which of the three you would use first. That decides what we finish next.
     </Fragment>
   </CallToAction>
 </Layout>

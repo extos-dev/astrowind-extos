@@ -9,16 +9,16 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: ExtOS.win — Modern Chrome Extension Portfolio
+    default: ExtOS.win — Local-first Chrome extensions
     template: '%s — ExtOS.win'
-  description: 'ExtOS.win is a suite of modern, high-performance Chrome extensions crafted for productivity, privacy, and seamless web browsing.'
+  description: 'Small, focused Chrome extensions that keep your data on your machine. Manifest V3, minimal permissions, no accounts, no tracking.'
   robots:
     index: true
     follow: true
   openGraph:
     site_name: ExtOS.win
     images:
-      - url: '~/assets/images/default.png'
+      - url: '~/assets/images/og-extos.png'
         width: 1200
         height: 628
     type: website
@@ -33,7 +33,7 @@ i18n:
 
 apps:
   blog:
-    isEnabled: true
+    isEnabled: false
     postsPerPage: 8
 
     post:

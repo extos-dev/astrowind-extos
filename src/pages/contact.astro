@@ -1,81 +1,90 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
-import ContactUs from '~/components/widgets/Contact.astro';
 import Features2 from '~/components/widgets/Features2.astro';
+import Note from '~/components/widgets/Note.astro';
+
+import { getPermalink } from '~/utils/permalinks';
 
 const metadata = {
   title: 'Contact',
   description:
-    'Contact page demo built with AstroWind: a form, contact details and support links in one accessible layout.',
+    'Contact ExtOS.win about early access, support, privacy requests or security reports. One address, read by the people who build the extensions.',
 };
+
+const email = 'hello@extos.win';
+const mail = (subject: string) => `mailto:${email}?subject=${encodeURIComponent(subject)}`;
 ---
 
 <Layout metadata={metadata}>
-  <!-- HeroText Widget ******************* -->
-
-  <HeroText tagline="Contact" title="Let's Connect!" />
-
-  <ContactUs
-    id="form"
-    title="Drop us a message today!"
-    subtitle="For quicker answers, explore our FAQs section. You may find the solution you're looking  for right there! If not, our support team is delighted to help you."
-    inputs={[
-      {
-        type: 'text',
-        name: 'name',
-        label: 'Name',
-      },
-      {
-        type: 'email',
-        name: 'email',
-        label: 'Email',
-      },
-    ]}
-    textarea={{
-      label: 'Message',
-    }}
-    disclaimer={{
-      label:
-        'By submitting this contact form, you acknowledge and agree to the collection of your personal information.',
-    }}
-    description="Our support team typically responds within 24 business hours."
+  <HeroText
+    badge="One inbox"
+    tagline="Contact"
+    title="Talk to the people who build it."
+    subtitle="There is no support portal and no ticket queue with a bot in front of it. Email reaches the same small team that writes the extensions."
+    callToAction={{ text: `Email ${email}`, href: mail('Hello ExtOS'), icon: 'tabler:mail' }}
+    callToAction2={{ text: 'Read the FAQ', href: getPermalink('/#faqs'), icon: 'tabler:help' }}
   />
-
-  <!-- Features2 Widget ************** -->
 
   <Features2
-    title="We are here to help!"
+    id="reasons"
+    tagline="Pick a reason"
+    title="What are you writing about?"
+    subtitle="The subject line helps route it. Nothing else is required."
+    columns={2}
     items={[
       {
-        title: 'General support',
-        description: `Chat with us for inquiries related to account management, website navigation, payment issues, accessing purchased templates or general questions about the website's functionality.`,
-      },
-      {
-        title: 'Contact sales',
+        title: 'Early access',
         description:
-          'Chat with us for questions about purchases, customization options, licensing for commercial use, inquiries about specific template, etc.',
+          'Want to test one of the three extensions before it is public? Say which one and what you would use it for. Pre-release builds go to people with a real workflow to try.',
+        icon: 'tabler:rocket',
+        href: mail('Early access'),
       },
       {
-        title: 'Technical support',
+        title: 'Support and bug reports',
         description:
-          'Chat with us when facing issues like template installation, problems editing difficulties, compatibility issues with software or download errors, or other technical challenges related to using the templates.',
+          'Something broken, confusing, or exporting the wrong columns? Include the extension, its version, your Chrome version and the page or file that failed.',
+        icon: 'tabler:bug',
+        href: mail('Support'),
       },
       {
-        title: 'Phone',
-        description: '+1 (234) 567-890',
-        icon: 'tabler:headset',
+        title: 'Privacy and data requests',
+        description:
+          'Questions about what an extension stores, or a request to confirm or delete data. The privacy policy explains what is collected — in most cases, nothing on our side.',
+        icon: 'tabler:lock',
+        href: mail('Privacy request'),
       },
       {
-        title: 'Email',
-        description: 'contact@support.com',
-        icon: 'tabler:mail',
-      },
-      {
-        title: 'Location',
-        description: '1234 Lorem Ipsum St, 12345, Miami, EEUU',
-        icon: 'tabler:map-pin',
+        title: 'Security reports',
+        description:
+          'Found a vulnerability or a permission that does more than it should? Report it privately by email first. We will confirm receipt and agree on disclosure timing.',
+        icon: 'tabler:shield-exclamation',
+        href: mail('Security report'),
       },
     ]}
   />
+
+  <Note
+    variant="info"
+    title="Before you write:"
+    description={`Check the <a class="underline" href="${getPermalink('/#faqs')}">FAQ</a> and the product page — permissions, network calls and current availability are documented there.`}
+  />
+
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 py-16 md:py-20" aria-labelledby="direct">
+    <div class="prose prose-lg dark:prose-invert mx-auto">
+      <h2 id="direct">Direct address</h2>
+      <p>
+        <a href={mail('Hello ExtOS')}>{email}</a>
+      </p>
+      <p>
+        No contact form, because a form needs a backend and a backend means another place your message could sit. Email
+        goes straight to the inbox we read.
+      </p>
+      <h2>What we do not have</h2>
+      <p>
+        No phone support, no live chat, no account system. Replies come in the order messages arrive, usually within a
+        few working days. If you are reporting a security issue, say so in the subject line.
+      </p>
+    </div>
+  </section>
 </Layout>

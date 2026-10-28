@@ -1,0 +1,146 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Features from '~/components/widgets/Features.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Note from '~/components/widgets/Note.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { Icon } from 'astro-icon/components';
+
+import { products, availabilityLabel } from '~/data/products';
+import { getPermalink } from '~/utils/permalinks';
+
+interface Props {
+  product: (typeof products)[number];
+}
+
+export function getStaticPaths() {
+  return products.map((product) => ({ params: { slug: product.slug }, props: { product } }));
+}
+
+const { product } = Astro.props;
+
+const metadata = {
+  title: `${product.name} — ${product.tagline}`,
+  description: product.summary,
+};
+
+const otherProducts = products.filter((item) => item.slug !== product.slug);
+---
+
+<Layout metadata={metadata}>
+  <HeroText
+    badge={`Manifest V3 · v${product.version}`}
+    tagline="Extension"
+    title={product.name}
+    subtitle={product.summary}
+    callToAction={{ text: 'All extensions', href: getPermalink('/extensions'), icon: 'tabler:arrow-left' }}
+    callToAction2={{ text: 'Ask about early access', href: getPermalink('/contact'), icon: 'tabler:mail' }}
+  />
+
+  <Note
+    variant="info"
+    title={`${availabilityLabel(product)}.`}
+    description="This page describes what the extension does and what it asks for — read it before installing anything. Pricing and the store listing are published when the extension is ready."
+  />
+
+  <!-- Overview ********************** -->
+
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 py-16 md:py-20" aria-labelledby="overview">
+    <div class="prose prose-lg dark:prose-invert mx-auto">
+      <h2 id="overview">What it does</h2>
+      <p>{product.description}</p>
+      {
+        product.formats && (
+          <>
+            <h3>Export formats</h3>
+            <ul>
+              {product.formats.map((format) => (
+                <li>{format}</li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- Features *********************** -->
+
+  <Features2
+    id="features"
+    tagline="Built in"
+    title={`What ${product.shortName} can do`}
+    columns={3}
+    items={product.features}
+  />
+
+  <!-- Permissions ******************** -->
+
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-16 md:py-20" aria-labelledby="permissions">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-sm font-bold uppercase tracking-wide text-secondary dark:text-blue-200">Before you install</p>
+      <h2 id="permissions" class="mt-2 text-3xl font-bold">Permissions, and why each one exists</h2>
+      <p class="mt-4 text-muted">
+        Chrome shows this list at install time. Here it is in plain language, with the feature that needs it.
+      </p>
+
+      <div class="mt-8 overflow-hidden rounded-xl border border-gray-200 dark:border-slate-700">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-gray-50 text-xs font-semibold uppercase tracking-wide text-muted dark:bg-slate-800">
+            <tr>
+              <th scope="col" class="px-4 py-3">Permission</th>
+              <th scope="col" class="px-4 py-3">What it is used for</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 dark:divide-slate-700">
+            {
+              product.permissions.map((permission) => (
+                <tr>
+                  <th scope="row" class="px-4 py-3 align-top font-semibold">
+                    {permission.name}
+                  </th>
+                  <td class="px-4 py-3 align-top text-muted">{permission.why}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div
+        class="mt-6 flex gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-900 dark:bg-emerald-950/40"
+      >
+        <Icon name="tabler:lock" class="mt-0.5 h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400" />
+        <p class="text-sm text-emerald-900 dark:text-emerald-200">{product.dataNote}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Other extensions ************** -->
+
+  <Features
+    tagline="Also in the pipeline"
+    title="The other two"
+    columns={2}
+    items={otherProducts.map((item) => ({
+      title: item.name,
+      description: item.tagline,
+      icon: item.icon,
+      callToAction: { text: 'Read more', href: getPermalink(`/extensions/${item.slug}`), icon: 'tabler:arrow-right' },
+    }))}
+  />
+
+  <CallToAction
+    actions={[
+      { variant: 'primary', text: 'Ask about early access', href: getPermalink('/contact'), icon: 'tabler:mail' },
+      { text: 'All extensions', href: getPermalink('/extensions'), icon: 'tabler:puzzle' },
+    ]}
+  >
+    <Fragment slot="title">Want to try {product.shortName} before it is public?</Fragment>
+    <Fragment slot="subtitle">
+      Tell us what you would use it for. Pre-release builds go to people with a real workflow to test, not to a mailing
+      list.
+    </Fragment>
+  </CallToAction>
+</Layout>

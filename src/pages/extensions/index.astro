@@ -1,0 +1,58 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Note from '~/components/widgets/Note.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+import { products, availabilityLabel } from '~/data/products';
+import { getPermalink } from '~/utils/permalinks';
+
+const metadata = {
+  title: 'Extensions',
+  description:
+    'The ExtOS.win extension portfolio: TabWize Data Extractor, InvoiceSnap Local and Extension Security Audit. Local-first, Manifest V3, minimal permissions.',
+};
+---
+
+<Layout metadata={metadata}>
+  <HeroText
+    badge="Pre-release"
+    tagline="Portfolio"
+    title="Three extensions. One job each."
+    subtitle="No suite, no bundle, no subscription to unlock the basics. Each extension does one thing, asks for the permission that thing needs, and keeps your data on your machine."
+    callToAction={{ text: 'How we build', href: getPermalink('/about'), icon: 'tabler:code' }}
+    callToAction2={{ text: 'Talk to us', href: getPermalink('/contact'), icon: 'tabler:mail' }}
+  />
+
+  <Features2
+    id="extensions"
+    tagline="The portfolio"
+    title="Pick the one that matches your problem"
+    subtitle="All three are pre-release. Every page lists the permissions the extension requests, in plain language."
+    columns={3}
+    items={products.map((product) => ({
+      title: product.name,
+      description: `${product.summary}<br /><span class="mt-3 inline-block rounded-full border border-gray-300 px-2.5 py-0.5 text-xs font-semibold text-muted dark:border-slate-600">${availabilityLabel(product)}</span>`,
+      icon: product.icon,
+      href: getPermalink(`/extensions/${product.slug}`),
+    }))}
+  />
+
+  <Note
+    variant="warning"
+    title="Nothing here is on the Chrome Web Store yet."
+    description="The pages describe the built extensions and their permissions. When a listing goes live, it will be linked from the product page."
+  />
+
+  <CallToAction
+    actions={[
+      { variant: 'primary', text: 'Ask about early access', href: getPermalink('/contact'), icon: 'tabler:mail' },
+    ]}
+  >
+    <Fragment slot="title">Which one would you actually use?</Fragment>
+    <Fragment slot="subtitle">
+      Tell us the workflow you are trying to fix. It is the fastest way to influence what ships first.
+    </Fragment>
+  </CallToAction>
+</Layout>
