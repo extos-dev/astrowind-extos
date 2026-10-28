@@ -64,7 +64,7 @@ const faqSchema = schema
             name={groupName}
             open={index === defaultOpen}
           >
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 outline-offset-4 [&::-webkit-details-marker]:hidden">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-lg py-5 outline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900 [&::-webkit-details-marker]:hidden">
               {itemTitle && <h3 class="text-lg font-semibold text-heading md:text-xl">{itemTitle}</h3>}
               <Icon
                 name={icon || 'tabler:chevron-down'}
